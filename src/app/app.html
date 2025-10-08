@@ -1,0 +1,22 @@
+<div class="container">
+  <h1>Dating App</h1>
+
+  <!-- טופס הרשמה -->
+  <div class="form">
+    <h2>Register</h2>
+    <input type="text" placeholder="Username" ngModel="registerData.userName" />
+    <input type="password" placeholder="Password" ngModel="registerData.password" />
+    <button (click)="register()">Register</button>
+  </div>
+
+  <!-- טופס התחברות -->
+  <div class="form">
+    <h2>Login</h2>
+    <input type="text" placeholder="Username" ngModel="loginData.userName" />
+    <input type="password" placeholder="Password" ngModel="loginData.password" />
+    <button (click)="login()">Login</button>
+  </div>
+
+  <!-- הודעה למשתמש -->
+  <p>{{ message }}</p>
+</div>
