@@ -1,14 +1,15 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.html',
   styleUrls: ['./app.css'],
   standalone: true,
+  imports: [HttpClientModule], // הוספת HttpClientModule ל־standalone component
 })
 export class AppComponent {
-  baseUrl = 'https://localhost:5001/api/members'; // כתובת השרת API (לוודא פורט נכון)
+  baseUrl = 'https://localhost:5174/api/members'; // כתובת השרת API (לוודא פורט נכון)
   // אובייקטים שנקשרים לטפסים
   registerData = { userName: '', password: '' };
   loginData = { userName: '', password: '' };
