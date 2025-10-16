@@ -1,22 +1,128 @@
-<div class="container">
-  <h1>Dating App</h1>
+<body class="bg-light d-flex align-items-center justify-content-center">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-sm-10 col-md-8 col-lg-6">
+        <!-- כרטיס עם טאבים -->
+        <div class="card shadow-sm">
+          <div class="card-header bg-white">
+            <ul class="nav nav-pills nav-fill">
+              <li class="nav-item">
+                <button
+                  class="nav-link"
+                  [class.active]="activeTab === 'login'"
+                  (click)="setActiveTab('login')"
+                >
+                  Login
+                </button>
+              </li>
+              <li class="nav-item">
+                <button
+                  class="nav-link"
+                  [class.active]="activeTab === 'register'"
+                  (click)="setActiveTab('register')"
+                >
+                  Register
+                </button>
+              </li>
+            </ul>
+          </div>
 
-  <!-- טופס הרשמה -->
-  <div class="form">
-    <h2>Register</h2>
-    <input type="text" placeholder="Username" ngModel="registerData.userName" />
-    <input type="password" placeholder="Password" ngModel="registerData.password" />
-    <button (click)="register()">Register</button>
+          <div class="card-body">
+            <div class="tab-content mt-3">
+              <div
+                class="tab-pane"
+                [class.show]="activeTab === 'login'"
+                [class.active]="activeTab === 'login'"
+              >
+                <form (ngSubmit)="login()" #loginForm="ngForm">
+                  <div class="mb-3">
+                    <label class="form-label">Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="loginName"
+                      [(ngModel)]="loginData.userName"
+                      required
+                      (input)="clearMessage()"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      name="loginPassword"
+                      [(ngModel)]="loginData.password"
+                      required
+                      (input)="clearMessage()"
+                    />
+                  </div>
+                  <div class="d-grid">
+                    <button type="submit" class="btn btn-primary">Login</button>
+                  </div>
+                </form>
+              </div>
+
+              <div
+                class="tab-pane"
+                [class.show]="activeTab === 'register'"
+                [class.active]="activeTab === 'register'"
+              >
+                <form (ngSubmit)="register()" #registerForm="ngForm">
+                  <div class="mb-3">
+                    <label class="form-label">Name</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      name="registerName"
+                      [(ngModel)]="registerData.userName"
+                      required
+                      (input)="clearMessage()"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Password</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      name="registerPassword"
+                      [(ngModel)]="registerData.password"
+                      required
+                      (input)="clearMessage()"
+                    />
+                  </div>
+                  <div class="mb-3">
+                    <label class="form-label">Confirm Password</label>
+                    <input
+                      type="password"
+                      class="form-control"
+                      name="confirmPassword"
+                      [(ngModel)]="registerData.confirmPassword"
+                      required
+                      (input)="clearMessage()"
+                    />
+                  </div>
+                  <div class="d-grid">
+                    <button type="submit" class="btn btn-success">Register</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+          <div *ngIf="message" class="card-footer">
+            <div
+              class="alert mb-0"
+              role="alert"
+              [class.alert-success]="messageType === 'success'"
+              [class.alert-danger]="messageType === 'danger'"
+              [class.alert-info]="messageType === 'info' || messageType === ''"
+            >
+              {{ message }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <!-- טופס התחברות -->
-  <div class="form">
-    <h2>Login</h2>
-    <input type="text" placeholder="Username" ngModel="loginData.userName" />
-    <input type="password" placeholder="Password" ngModel="loginData.password" />
-    <button (click)="login()">Login</button>
-  </div>
-
-  <!-- הודעה למשתמש -->
-  <p>{{ message }}</p>
-</div>
+</body>
