@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectorRef } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
@@ -25,7 +25,7 @@ export class AppComponent {
   // 🔵 כתובת השרת שלך
   baseUrl = 'http://localhost:5174/api/members';
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private cdr: ChangeDetectorRef) {}
 
   // שינוי טאב (כשמשתמש לוחץ על Login/Register)
   setActiveTab(tab: 'login' | 'register') {
@@ -43,21 +43,29 @@ export class AppComponent {
   login() {
     this.http.post(this.baseUrl + '/login', this.loginData).subscribe({
       next: (res) => {
+        console.log('login success', res);
         this.message = 'Login successful!';
         this.messageType = 'success';
+        this.cdr.detectChanges(); // מוודא ש־change detection מרענן את התצוגה
       },
       error: (err) => {
+        console.log('login error', err);
         this.message = err?.error ?? 'Login failed';
         this.messageType = 'danger';
+        this.cdr.detectChanges();
       },
     });
   }
 
   // הרשמה
   register() {
-    if (this.registerData.password !== this.registerData.confirmPassword) {
+    const pwd = this.registerData.password?.trim() ?? '';
+    const confirm = this.registerData.confirmPassword?.trim() ?? '';
+
+    if (pwd !== confirm) {
       this.message = 'Passwords do not match';
       this.messageType = 'danger';
+      this.cdr.detectChanges();
       return;
     }
 
@@ -68,12 +76,16 @@ export class AppComponent {
       })
       .subscribe({
         next: (res) => {
+          console.log('register success', res);
           this.message = 'Registration successful!';
           this.messageType = 'success';
+          this.cdr.detectChanges(); // מעדכן את התצוגה מיד
         },
         error: (err) => {
+          console.log('register error', err);
           this.message = err?.error ?? 'Registration failed';
           this.messageType = 'danger';
+          this.cdr.detectChanges();
         },
       });
   }
